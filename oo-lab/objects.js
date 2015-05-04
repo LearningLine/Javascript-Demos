@@ -1,5 +1,33 @@
 // Create your "classes" here.
 
+function DisplayObject(name) {
+}
+
+DisplayObject.prototype.clicked = function() {
+    alert('you clicked the thing');
+};
+
+function Rect(options) {
+    this.x = +options.x;
+    this.y = +options.y;
+    this.w = +options.width;
+    this.h = +options.height;
+    this.fillStyle = options.fillStyle;
+    this.strokeStyle = options.strokeStyle;
+}
+
+// Rect.prototype = DisplayObject.prototype;
+Rect.prototype = new DisplayObject();
+
+Rect.prototype.draw = function(ctx) {
+    helpers.rect(ctx, this)
+};
+
+Rect.prototype.contains = function(x, y) {
+    return x >= this.x && x < this.x + this.w &&
+           y >= this.y && y < this.y + this.h;
+};
+
 // You need Rect, Circle, and Logo classes.
 // They can all inherit from a DisplayObject class.
 
