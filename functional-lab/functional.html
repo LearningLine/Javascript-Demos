@@ -10,7 +10,7 @@
         <div class="page-header">
             <h1>Functional JavaScript</h1>
         </div>
-        
+
         <p class="lead">An interactive demonstration of JavaScript's <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/Reduce">reduce</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/ReduceRight">reduceRight</a> methods.</p>
 
         <form class="form-horizontal">
@@ -74,9 +74,82 @@
     </div>
 
     <script>
-        // TODO: Populate the "callbacks" table with the arguments
-        // the reduce or reduceRight methods pass in to your callback.
-        // Also include the return value from your callback.
+        document.getElementById('method').oninput = render;
+        document.getElementById('array').oninput = render;
+        document.getElementById('callback').oninput = render;
+        document.getElementById('initialValue').oninput = render;
+
+        function render() {
+            var method = document.getElementById('method').value;
+            var array = document.getElementById('array').value;
+            var callback = document.getElementById('callback').value;
+            var initialValue = document.getElementById('initialValue').value;
+            var callbacks = document.getElementById('callbacks');
+            var result = document.getElementById('result');
+
+            callbacks.tBodies[0].innerHTML = '';
+
+            var actualArray = JSON.parse(array);
+
+            try {
+                var actualCallback = eval('(' + callback + ')');
+            } catch (err) {
+                return;
+            }
+
+            var actualInitialValue = initialValue ? JSON.parse(initialValue) : null;
+
+            var call = 0;
+
+            if (actualInitialValue !== null) {
+                result.value = actualArray[method](trace, actualInitialValue);
+            } else {
+                result.value = actualArray[method](trace);
+            }
+
+            function trace(p, c, i, a) {
+                call++;
+                var ret = actualCallback(p, c, i, a);
+                addRow(p, c, i, a, ret);
+                return ret;
+            }
+
+            function addRow(p, c, i, a, r) {
+                var newRow = callbacks.tBodies[0].insertRow(-1);
+
+                newRow.insertCell(-1).innerHTML = call;
+                newRow.insertCell(-1).innerHTML = p;
+                newRow.insertCell(-1).innerHTML = c;
+                newRow.insertCell(-1).innerHTML = i;
+                newRow.insertCell(-1).innerHTML = JSON.stringify(a);
+                newRow.insertCell(-1).innerHTML = r;
+            }
+        }
+
+        render();
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
