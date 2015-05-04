@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Functional JavaScript</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Functional JavaScript</h1>
+        </div>
+        
+        <p class="lead">An interactive demonstration of JavaScript's <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/Reduce">reduce</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/ReduceRight">reduceRight</a> methods.</p>
+
+        <form class="form-horizontal">
+            <div class="control-group">
+                <label for="method" class="control-label">method</label>
+                <div class="controls">
+                    <select id="method">
+                        <option>reduce</option>
+                        <option>reduceRight</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="array" class="control-label">array</label>
+                <div class="controls">
+                    <input id="array" value="[ 1, 2, 3, 4 ]" type="text">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="callback" class="control-label">callback</label>
+                <div class="controls">
+                    <textarea id="callback" cols="80" rows="3" class="input-block-level" spellcheck="false">function(previousValue, currentValue, index, array) {
+    return previousValue + currentValue;
+}</textarea>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="initialValue" class="control-label">initialValue</label>
+                <div class="controls">
+                    <input id="initialValue" type="text" value="0">
+                </div>
+            </div>
+        </form>
+
+        <table id="callbacks" class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>previousValue</th>
+                    <th>currentValue</th>
+                    <th>index</th>
+                    <th>array</th>
+                    <th>return value</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <form class="form-horizontal">
+            <div class="control-group">
+                <label for="result" class="control-label">result</label>
+                <div class="controls">
+                    <input id="result" type="text" disabled>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // TODO: Populate the "callbacks" table with the arguments
+        // the reduce or reduceRight methods pass in to your callback.
+        // Also include the return value from your callback.
+    </script>
+</body>
+</html>
