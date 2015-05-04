@@ -27,7 +27,8 @@ function render(data) {
     console.log(averageComments);
 
     var averageComments2 = items.reduce(function(p, c, i) {
-        return p + (p - c.num_comments) / (i + 1);
+        // p + (c - p) / (i + 1)
+        return p + (c.num_comments - p) / (i + 1);
     }, 0);
 
     console.log(averageComments2);
