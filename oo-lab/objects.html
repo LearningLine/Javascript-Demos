@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Object-oriented JavaScript</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <style>
+        #canvas { border: 1px solid black; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Object-oriented JavaScript</h1>
+        </div>
+        
+        <p class="lead">A hierarchy of shapes, drawn on a <code>canvas</code>.</p>
+
+        <div class="row">
+            <div class="span2">
+                <div id="buttons" class="btn-group btn-group-vertical">
+                    <!-- Buttons to add objects to the canvas.
+                         data-object names the constructor function.
+                         The other data- attributes depend on the type of object. -->
+                    <button data-object="Rect"
+                            data-x="10"
+                            data-y="10"
+                            data-width="100"
+                            data-height="100"
+                            data-fill-style="#c33"
+                            data-stroke-style="#000"
+                            class="btn">Add Square</button>
+                    <button data-object="Circle"
+                            data-x="270"
+                            data-y="100"
+                            data-radius="50"
+                            data-fill-style="#393"
+                            data-stroke-style="#000"
+                            class="btn">Add Circle</button>
+                    <button data-object="Logo"
+                            data-x="520"
+                            data-y="40"
+                            class="btn">Add Logo</button>
+                </div>
+            </div>
+            <div class="span10">
+                <canvas id="canvas" width="640" height="480"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var objects = [];
+
+        // Add an object to the canvas.
+        document.getElementById('buttons').onclick = function(e) {
+            e.preventDefault();
+
+            // Try to construct an object named by the
+            // data-object attribute.
+            var ctor = window[e.target.dataset.object];
+
+            if (ctor) {
+                // Pass the data set containing all of the
+                // data- attributes. The values are all strings
+                // so might need to be converted into numbers.
+                objects.push(new ctor(e.target.dataset));
+                draw();
+            }
+        };
+
+        // Resets the canvas and draws all the objects.
+        function draw() {
+            canvas.width = canvas.width;
+
+            objects.forEach(function(object) {
+                object.draw(ctx);
+            });
+        }
+
+        // When the canvas is clicked, try to find the
+        // object that was under the pointer.
+        canvas.onclick = function(e) {
+            var offset = getOffset(e);
+
+            objects.forEach(function(object) {
+                if (object.contains &&
+                    object.contains(offset.offsetX, offset.offsetY)) {
+                    if (object.clicked) {
+                        object.clicked();
+                    }
+                }
+            });
+        };
+
+        // Helper for browsers without offsetX/offsetY.
+        function getOffset(event) {
+            var offsetX = event.offsetX;
+            var offsetY = event.offsetY;
+
+            if (offsetX !== undefined &&
+                offsetY !== undefined) {
+                return event;
+            }
+
+            var element = event.target;
+
+            do {
+                offsetX += element.offsetLeft;
+                offsetY += element.offsetTop;
+            } while (element = element.offsetParent);
+
+            return {
+                offsetX: event.pageX - offsetX,
+                offsetY: event.pageY - offsetY
+            };
+        }
+    </script>
+
+    <script src="helpers.js"></script>
+    <script src="objects.js"></script>
+</body>
+</html>
